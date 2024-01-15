@@ -1,3 +1,5 @@
+import DashboardPost from '@/components/Layout/Dashboard/DashboardPost/DashboardPost';
+import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import Link from 'next/link';
 
@@ -6,12 +8,7 @@ export default function Home() {
     <main>
       <h2>Dashboard</h2>
       <p>
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim dicta eos
-        ut nostrum eligendi libero reprehenderit harum, quis cum ex voluptatum
-        est tempore doloribus maxime autem totam dignissimos expedita omnis
-        reiciendis? Sit eaque voluptatum, iure possimus minus cum et labore
-        molestiae quidem, fugiat deserunt porro officiis rem, incidunt obcaecati
-        voluptatem?
+        The main dashboard of <span className="font-bold">Dojo Helpdesk</span>
       </p>
 
       <div className="my-8 flex justify-center">
@@ -20,39 +17,52 @@ export default function Home() {
         </Link>
       </div>
 
-      <h2>Company Updates</h2>
+      <h2>Site Updates</h2>
 
-      <Card className="my-4">
-        <CardHeader>
-          <CardTitle>New member of the web dev team...</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim dicta
-            eos ut nostrum eligendi libero reprehenderit harum, quis cum ex
-            voluptatum est tempore doloribus maxime autem totam dignissimos
-            expedita omnis reiciendis? Sit eaque voluptatum, iure possimus minus
-            cum et labore molestiae quidem, fugiat deserunt porro officiis rem,
-            incidunt obcaecati voluptatem?
-          </p>
-        </CardContent>
-      </Card>
-
-      <Card>
-        <CardHeader>
-          <CardTitle>New website live</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p>
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim dicta
-            eos ut nostrum eligendi libero reprehenderit harum, quis cum ex
-            voluptatum est tempore doloribus maxime autem totam dignissimos
-            expedita omnis reiciendis? Sit eaque voluptatum, iure possimus minus
-            cum et labore molestiae quidem, fugiat deserunt porro officiis rem,
-            incidunt obcaecati voluptatem?
-          </p>
-        </CardContent>
-      </Card>
+      <DashboardPost title="Welcome to Dojo Helpdesk">
+        Dojo Helpdesk has been completed!
+        <br />
+        <br />
+        Thanks to {``}
+        <Badge>
+          <Link href={`https://netninja.dev/courses/`} target="_blank">
+            Net Ninja
+          </Link>
+        </Badge>
+        &apos;s{' '}
+        <Badge>
+          <Link
+            href={`https://netninja.dev/p/next-13-masterclass`}
+            target="_blank"
+          >
+            Next.js 13 Masterclass
+          </Link>
+        </Badge>
+        , I&apos;ve been able to create this site.
+        <br />
+        <br />
+        The site also utilizes{' '}
+        <Badge>
+          <Link href={`https://ui.shadcn.com/docs`} target="_blank">
+            shadcn/ui
+          </Link>{' '}
+        </Badge>{' '}
+        for styling, which I learned how to use courtesy of the{' '}
+        <Badge>
+          <Link href={`https://www.youtube.com/@NetNinja`} target="_blank">
+            Net Ninja YouTube channel
+          </Link>
+        </Badge>
+        <div className="mt-4 flex flex-col items-center">
+          <iframe
+            width="560"
+            height="315"
+            src="https://www.youtube-nocookie.com/embed/videoseries?si=G7c5-18GugsMKtPf&amp;list=PL4cUxeGkcC9h1NXLUuiAQ7c4UtdEInqma"
+            title="YouTube video player"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+          ></iframe>
+        </div>
+      </DashboardPost>
     </main>
   );
 }
