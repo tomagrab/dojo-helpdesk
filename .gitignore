@@ -39,3 +39,6 @@ _data
 db.json
 
 .prettierrc
+
+.env
+.env.local

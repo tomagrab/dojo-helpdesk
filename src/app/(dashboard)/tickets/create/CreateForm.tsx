@@ -1,5 +1,6 @@
 'use client';
 
+import { error } from 'console';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -19,22 +20,26 @@ export default function CreateForm() {
       title,
       body,
       priority,
-      user_email: 'mario@netninja.dev',
     };
 
     try {
-      const res = await fetch('http://localhost:4000/tickets', {
+      const res = await fetch('http://localhost:3000/api/tickets', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(ticket),
       });
 
-      if (res.status === 201) {
+      const json = await res.json();
+
+      if (json.error) {
+        console.log(json.error);
+      }
+      if (json.data) {
         router.refresh();
-        router.push('/tickets');
+        router.push(`/tickets`);
       }
     } catch (err: unknown) {
-      console.log(err);
+      console.error(err);
     }
   };
 

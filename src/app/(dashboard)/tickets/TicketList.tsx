@@ -7,16 +7,23 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Ticket } from '@/lib/Types/Ticket/Ticket';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import Link from 'next/link';
+import { cookies } from 'next/headers';
 
 async function getTickets() {
-  const tickets = await fetch('http://localhost:4000/tickets', {
-    next: {
-      revalidate: 0, // use 0 to opt out of using cache
-    },
-  });
+  const supabase = createServerComponentClient({ cookies });
 
-  return tickets.json();
+  const { data, error } = await supabase
+    .from('Tickets')
+    .select('*')
+    .order('id', { ascending: false });
+
+  if (error) {
+    console.error(error);
+  }
+
+  return data as Ticket[];
 }
 
 export default async function TicketList() {

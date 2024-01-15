@@ -7,17 +7,10 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Ticket } from '@/lib/Types/Ticket/Ticket';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
 import { notFound } from 'next/navigation';
-
-export const dynamicParams = true;
-
-export async function generateStaticParams() {
-  const response = await fetch('http://localhost:4000/tickets');
-  const tickets = await response.json();
-  return tickets.map((ticket: Ticket) => ({
-    id: ticket.id,
-  }));
-}
+import { cookies } from 'next/headers';
+import DeleteButton from '@/components/ui/deleteButton';
 
 type TicketDetailsProps = {
   params: {
@@ -26,38 +19,51 @@ type TicketDetailsProps = {
 };
 
 export async function generateMetadata({ params }: TicketDetailsProps) {
-  const ticket = await getTicket(params.id);
+  const supabase = createServerComponentClient({ cookies });
+  const { data: ticket } = await supabase
+    .from('Tickets')
+    .select('*')
+    .eq('id', params.id)
+    .single();
+
   return {
-    title: `Dojo Helpdesk | ${ticket.title}`,
+    title: `Dojo Helpdesk | ${ticket?.title || 'Ticket not found'}`,
   };
 }
 
 async function getTicket(id: string) {
-  const ticket = await fetch('http://localhost:4000/tickets/' + id, {
-    next: {
-      revalidate: 0,
-    },
-  });
+  const supabase = createServerComponentClient({ cookies });
+  const { data } = await supabase
+    .from('Tickets')
+    .select('*')
+    .eq('id', id)
+    .single();
 
-  console.log(ticket);
-
-  if (!ticket.ok) {
+  if (!data) {
     notFound();
   }
 
-  return ticket.json();
+  return data;
 }
 
 export default async function TicketDetails({ params }: TicketDetailsProps) {
   const ticket: Ticket = await getTicket(params.id);
-  console.log(ticket);
+  const supabase = createServerComponentClient({ cookies });
+  const { data } = await supabase.auth.getSession();
+  const user = data?.session?.user;
   return (
     <main>
-      <nav className="flex">
-        <h2>Ticket Details</h2>
-        <Badge>#{ticket.id}</Badge>
-        <Badge className={`pill ${ticket.priority}`}>{ticket.priority}</Badge>
-        <Badge variant={'destructive'}>DELETE</Badge>
+      <nav className="flex justify-between">
+        <div className="flex items-center gap-2">
+          <h2>Ticket Details</h2>
+          <Badge>#{ticket.id}</Badge>
+          <Badge className={`pill ${ticket.priority}`}>{ticket.priority}</Badge>
+        </div>
+        {user?.email === ticket.user_email ? (
+          <div className="flex items-center">
+            <DeleteButton id={ticket.id} />
+          </div>
+        ) : null}
       </nav>
 
       <Card className="mb-4">
