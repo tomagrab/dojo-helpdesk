@@ -34,6 +34,8 @@ export default function SignUp() {
     }
   };
 
+  console.log(`${location.origin}/api/auth/callback`);
+
   return (
     <main>
       <h2>Sign Up</h2>
