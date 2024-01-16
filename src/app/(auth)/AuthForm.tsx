@@ -1,40 +1,85 @@
 'use client';
 
 import { useState } from 'react';
+import * as z from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import {
+  Form,
+  FormControl,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from '@/components/ui/form';
+import { Label } from '@/components/ui/label';
+import { Input } from '@/components/ui/input';
+import { Button } from '@/components/ui/button';
 
 type AuthFormProps = {
-  handleSubmit: (
-    e: React.FormEvent<HTMLFormElement>,
-    email: string,
-    password: string,
-  ) => void;
+  handleSubmit: (data: { email: string; password: string }) => void;
 };
+
+const formSchema = z.object({
+  email: z.string().email({
+    message: 'Invalid email address',
+  }),
+  password: z.string().min(8, {
+    message: 'Password must be at least 8 characters long',
+  }),
+});
 
 export default function AuthForm({ handleSubmit }: AuthFormProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
+  const form = useForm<z.infer<typeof formSchema>>({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  });
+
   return (
-    <form onSubmit={e => handleSubmit(e, email, password)}>
-      <label>
-        <span>Email:</span>
-        <input
-          type="email"
-          onChange={e => setEmail(e.target.value)}
-          value={email}
-          required
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)}>
+        <FormField
+          control={form.control}
+          name="email"
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel>
+                  <Label>Email</Label>
+                </FormLabel>
+                <FormControl>
+                  <Input {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
-      </label>
-      <label>
-        <span>Password:</span>
-        <input
-          type="password"
-          onChange={e => setPassword(e.target.value)}
-          value={password}
-          required
+        <FormField
+          control={form.control}
+          name="password"
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel>
+                  <Label>Password</Label>
+                </FormLabel>
+                <FormControl>
+                  <Input type="password" {...field} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
         />
-      </label>
-      <button className="btn-primary">Submit</button>
-    </form>
+        <Button type="submit">Submit</Button>
+      </form>
+    </Form>
   );
 }

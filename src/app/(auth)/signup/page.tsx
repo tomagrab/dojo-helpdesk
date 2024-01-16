@@ -10,12 +10,9 @@ export default function SignUp() {
   const router = useRouter();
   const [error, setError] = useState('');
 
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>,
-    email: string,
-    password: string,
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async (data: { email: string; password: string }) => {
+    const { email, password } = data;
+
     setError('');
 
     const supabase = createClientComponentClient();
@@ -33,8 +30,6 @@ export default function SignUp() {
       router.push('/verify');
     }
   };
-
-  console.log(`${location.origin}/api/auth/callback`);
 
   return (
     <main>

@@ -9,12 +9,8 @@ import AuthForm from '@/app/(auth)/AuthForm';
 export default function Login() {
   const [error, setError] = useState(''); // [1
   const router = useRouter();
-  const handleSubmit = async (
-    e: React.FormEvent<HTMLFormElement>,
-    email: string,
-    password: string,
-  ) => {
-    e.preventDefault();
+  const handleSubmit = async (data: { email: string; password: string }) => {
+    const { email, password } = data;
     setError('');
 
     const supabase = createClientComponentClient();
@@ -24,12 +20,11 @@ export default function Login() {
       password,
     });
 
-    if (!error) {
-      router.push('/');
-    }
     if (error) {
-      setError(error.message); //
+      setError(error.message);
       console.error(error);
+    } else {
+      router.push('/');
     }
   };
 
