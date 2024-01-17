@@ -1,5 +1,13 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu';
 import LogoutButton from '@/components/ui/logoutButton';
 import { User } from '@supabase/supabase-js';
 import Link from 'next/link';
@@ -11,7 +19,7 @@ type NavbarProps = {
 export default function Navbar({ user }: NavbarProps) {
   return (
     <nav className="flex justify-between">
-      <div className="flex items-center gap-2">
+      <div className="hidden items-center gap-2 md:flex">
         <Avatar>
           <AvatarImage src="/Images/ninja.png" />
           <AvatarFallback>DH</AvatarFallback>
@@ -39,6 +47,18 @@ export default function Navbar({ user }: NavbarProps) {
           </Badge>
         </div>
       )}
+
+      <DropdownMenu>
+        <DropdownMenuTrigger>Dojo Helpdesk</DropdownMenuTrigger>
+        <DropdownMenuContent>
+          <DropdownMenuLabel>My Account</DropdownMenuLabel>
+          <DropdownMenuSeparator />
+          <DropdownMenuItem>Profile</DropdownMenuItem>
+          <DropdownMenuItem>Billing</DropdownMenuItem>
+          <DropdownMenuItem>Team</DropdownMenuItem>
+          <DropdownMenuItem>Subscription</DropdownMenuItem>
+        </DropdownMenuContent>
+      </DropdownMenu>
     </nav>
   );
 }
