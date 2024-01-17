@@ -11,6 +11,7 @@ import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
 import { notFound } from "next/navigation";
 import { cookies } from "next/headers";
 import DeleteButton from "@/components/ui/deleteButton";
+import EditTicketForm from "./editTicketForm";
 
 type TicketDetailsProps = {
   params: {
@@ -67,17 +68,13 @@ export default async function TicketDetails({ params }: TicketDetailsProps) {
         ) : null}
       </nav>
 
-      <Card className="mb-4">
-        <CardHeader>
-          <CardTitle>{ticket.title}</CardTitle>
-        </CardHeader>
-        <CardContent>
-          <p>{ticket.body}</p>
-        </CardContent>
-        <CardFooter>
-          <Badge>{ticket.user_email}</Badge>
-        </CardFooter>
-      </Card>
+      <EditTicketForm
+        id={ticket.id}
+        title={ticket.title}
+        body={ticket.body}
+        priority={ticket.priority}
+        user_email={ticket.user_email}
+      />
     </main>
   );
 }

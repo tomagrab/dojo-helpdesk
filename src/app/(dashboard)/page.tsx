@@ -11,12 +11,6 @@ export default function Home() {
         The main dashboard of <span className="font-bold">Dojo Helpdesk</span>
       </p>
 
-      <div className="my-8 flex justify-center">
-        <Link href="/tickets">
-          <button className="btn-primary">View Tickets</button>
-        </Link>
-      </div>
-
       <h2>Site Updates</h2>
 
       <DashboardPost title="Welcome to Dojo Helpdesk">
