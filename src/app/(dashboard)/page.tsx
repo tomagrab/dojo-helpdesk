@@ -1,6 +1,7 @@
-import DashboardPost from '@/components/Layout/Dashboard/DashboardPost/DashboardPost';
-import { Badge } from '@/components/ui/badge';
-import Link from 'next/link';
+import DashboardPost from "@/components/Layout/Dashboard/DashboardPost/DashboardPost";
+import { Badge } from "@/components/ui/badge";
+import { Separator } from "@/components/ui/separator";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -28,7 +29,7 @@ export default function Home() {
             Net Ninja
           </Link>
         </Badge>
-        &apos;s{' '}
+        &apos;s{" "}
         <Badge>
           <Link
             href={`https://netninja.dev/p/next-13-masterclass`}
@@ -40,18 +41,19 @@ export default function Home() {
         , I&apos;ve been able to create this site.
         <br />
         <br />
-        The site also utilizes{' '}
+        The site also utilizes{" "}
         <Badge>
           <Link href={`https://ui.shadcn.com/docs`} target="_blank">
             shadcn/ui
-          </Link>{' '}
-        </Badge>{' '}
-        for styling, which I learned how to use courtesy of the{' '}
+          </Link>{" "}
+        </Badge>{" "}
+        for styling, which I learned how to use courtesy of the{" "}
         <Badge>
           <Link href={`https://www.youtube.com/@NetNinja`} target="_blank">
             Net Ninja YouTube channel
           </Link>
         </Badge>
+        <Separator className="my-4" />
         {/* To Do: Fix iFrame placement & size */}
         <div className="mt-4 flex flex-col items-center">
           <iframe
