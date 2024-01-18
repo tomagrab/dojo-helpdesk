@@ -68,13 +68,31 @@ export default async function TicketDetails({ params }: TicketDetailsProps) {
         ) : null}
       </nav>
 
-      <EditTicketForm
-        id={ticket.id}
-        title={ticket.title}
-        body={ticket.body}
-        priority={ticket.priority}
-        user_email={ticket.user_email}
-      />
+      {user?.email === ticket.user_email ||
+      user?.email === process.env.ADMIN_EMAIL ? (
+        <EditTicketForm
+          id={ticket.id}
+          title={ticket.title}
+          body={ticket.body}
+          priority={ticket.priority}
+          user_email={ticket.user_email}
+        />
+      ) : (
+        <Card>
+          <CardHeader>
+            <CardTitle>{ticket.title}</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <p>{ticket.body}</p>
+          </CardContent>
+          <CardFooter className="flex justify-between">
+            <Badge>{ticket.user_email}</Badge>
+            <Badge className={`pill ${ticket.priority}`}>
+              {ticket.priority}
+            </Badge>
+          </CardFooter>
+        </Card>
+      )}
     </main>
   );
 }

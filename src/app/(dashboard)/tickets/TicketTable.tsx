@@ -29,7 +29,7 @@ export default async function TicketTable({ tickets }: TableTableProps) {
             <TableHead>Ticket #</TableHead>
             <TableHead>Priority</TableHead>
             <TableHead>Title</TableHead>
-            <TableHead>User Email</TableHead>
+            <TableHead>Creator</TableHead>
             <TableHead></TableHead>
           </TableRow>
         </TableHeader>
