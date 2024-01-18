@@ -1,15 +1,35 @@
-import TicketList from '@/app/(dashboard)/tickets/TicketList';
-import { Suspense } from 'react';
-import Loading from '@/app/(dashboard)/tickets/loading';
-import Link from 'next/link';
-import { Badge } from '@/components/ui/badge';
-import { Metadata } from 'next';
+import { Suspense } from "react";
+import Loading from "@/app/(dashboard)/tickets/loading";
+import Link from "next/link";
+import { Badge } from "@/components/ui/badge";
+import { Metadata } from "next";
+import { Ticket } from "@/lib/Types/Ticket/Ticket";
+import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
+import { cookies } from "next/headers";
+import TicketTable from "./TicketTable";
 
 export const metadata: Metadata = {
-  title: 'Dojo Helpdesk | Tickets',
+  title: "Dojo Helpdesk | Tickets",
 };
 
+async function getTickets() {
+  const supabase = createServerComponentClient({ cookies });
+
+  const { data, error } = await supabase
+    .from("Tickets")
+    .select("*")
+    .order("id", { ascending: false });
+
+  if (error) {
+    throw new Error(error.message);
+  }
+
+  return data as Ticket[];
+}
+
 export default async function Tickets() {
+  const tickets: Ticket[] = await getTickets();
+
   return (
     <main>
       <nav className="flex items-center justify-between">
@@ -29,7 +49,7 @@ export default async function Tickets() {
       </nav>
 
       <Suspense fallback={<Loading />}>
-        <TicketList />
+        <TicketTable tickets={tickets} />
       </Suspense>
     </main>
   );

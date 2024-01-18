@@ -1,5 +1,5 @@
 "use client";
-import { addTicket } from "@/app/(dashboard)/tickets/actions";
+import { updateTicket } from "@/app/(dashboard)/tickets/actions";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -63,7 +63,7 @@ export default function EditTicketForm({
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
-      id: id,
+      id: id.toString(),
       title: title,
       body: body,
       priority: priority,
@@ -72,7 +72,9 @@ export default function EditTicketForm({
   });
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
+    console.log("This is being called");
+    console.log("values", values);
+    await updateTicket(values);
   };
 
   return (
@@ -83,7 +85,7 @@ export default function EditTicketForm({
           name="id"
           render={({ field }) => {
             return (
-              <FormItem>
+              <FormItem className="hidden">
                 <FormLabel>
                   <Label>ID</Label>
                 </FormLabel>
@@ -141,14 +143,14 @@ export default function EditTicketForm({
                 <Select onValueChange={field.onChange}>
                   <FormControl>
                     <SelectTrigger>
-                      <SelectValue>{field.value}</SelectValue>
+                      <SelectValue placeholder="Select a priority" />
                     </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="low">Low</SelectItem>
-                      <SelectItem value="medium">Medium</SelectItem>
-                      <SelectItem value="high">High</SelectItem>
-                    </SelectContent>
                   </FormControl>
+                  <SelectContent>
+                    <SelectItem value="low">Low</SelectItem>
+                    <SelectItem value="medium">Medium</SelectItem>
+                    <SelectItem value="high">High</SelectItem>
+                  </SelectContent>
                 </Select>
                 <FormMessage />
               </FormItem>
@@ -160,7 +162,7 @@ export default function EditTicketForm({
           name="user_email"
           render={({ field }) => {
             return (
-              <FormItem>
+              <FormItem className="hidden">
                 <FormLabel>
                   <Label>User Email</Label>
                 </FormLabel>
@@ -172,7 +174,7 @@ export default function EditTicketForm({
             );
           }}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">Update</Button>
       </form>
     </Form>
   );

@@ -1,4 +1,4 @@
-import CreateForm from '@/app/(dashboard)/tickets/create/CreateForm';
+import CreateForm from "@/app/(dashboard)/tickets/create/CreateForm";
 
 export default function CreateTicket() {
   return (

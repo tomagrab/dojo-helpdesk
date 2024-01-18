@@ -29,6 +29,7 @@ export async function addTicket(ticket: FormTicket) {
 }
 
 export async function updateTicket(ticket: Ticket) {
+  console.log("updateTicket");
   console.log(ticket);
   const supabase = createServerActionClient({ cookies });
 
@@ -39,7 +40,7 @@ export async function updateTicket(ticket: Ticket) {
     .eq("id", ticket.id);
 
   if (error) {
-    throw new Error("Ticket could not be updated");
+    throw new Error(error.message);
   }
 
   revalidatePath("/tickets");
