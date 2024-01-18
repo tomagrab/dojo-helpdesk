@@ -23,7 +23,6 @@ export const getColumns = (user: User): ColumnDef<Ticket>[] => [
     accessorFn: ticket => {
       return ticket.id.toString();
     },
-
     header: ({ column }) => {
       return (
         <Button

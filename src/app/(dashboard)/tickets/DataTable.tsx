@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -50,21 +50,6 @@ export default function DataTable<TData, TValue>({
       columnFilters,
     },
   });
-
-  // Debugging: Log the current filter state
-  useEffect(() => {
-    console.log('Current column filters:', columnFilters);
-  }, [columnFilters]);
-
-  // Debugging: Log the current sorting state
-  useEffect(() => {
-    console.log('Current sorting state:', sorting);
-  }, [sorting]);
-
-  // Debugging: Log the table data
-  useEffect(() => {
-    console.log('Table data:', data);
-  }, [data]);
 
   return (
     <div>
