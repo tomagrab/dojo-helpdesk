@@ -18,7 +18,7 @@ type NavbarProps = {
 
 export default function Navbar({ user }: NavbarProps) {
   return (
-    <nav className="">
+    <nav>
       <div className="md:hidden">
         <DropdownMenu>
           <DropdownMenuTrigger>
@@ -34,6 +34,10 @@ export default function Navbar({ user }: NavbarProps) {
             </DropdownMenuItem>
             <DropdownMenuItem>
               <Link href="/tickets">Tickets</Link>
+            </DropdownMenuItem>
+            <DropdownMenuSeparator />
+            <DropdownMenuItem>
+              <LogoutButton />
             </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>

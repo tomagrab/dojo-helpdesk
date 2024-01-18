@@ -14,8 +14,8 @@ export default function Home() {
 
       <DashboardPost title="Ticketing Updates">
         <p>
-          Ticketing has been updated to allow for filtering by title, priority,
-          and creator.
+          Ticketing has been updated to allow for filtering by ticket number,
+          title, priority, and creator.
         </p>
         <br />
         <p>

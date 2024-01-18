@@ -1,17 +1,17 @@
-import { Badge } from "@/components/ui/badge";
+import { Badge } from '@/components/ui/badge';
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from "@/components/ui/card";
-import { Ticket } from "@/lib/Types/Ticket/Ticket";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { notFound } from "next/navigation";
-import { cookies } from "next/headers";
-import DeleteButton from "@/components/ui/deleteButton";
-import EditTicketForm from "./editTicketForm";
+} from '@/components/ui/card';
+import { Ticket } from '@/lib/Types/Ticket/Ticket';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { notFound } from 'next/navigation';
+import { cookies } from 'next/headers';
+import DeleteButton from '@/components/ui/deleteButton';
+import EditTicketForm from './editTicketForm';
 
 type TicketDetailsProps = {
   params: {
@@ -22,22 +22,22 @@ type TicketDetailsProps = {
 export async function generateMetadata({ params }: TicketDetailsProps) {
   const supabase = createServerComponentClient({ cookies });
   const { data: ticket } = await supabase
-    .from("Tickets")
-    .select("*")
-    .eq("id", params.id)
+    .from('Tickets')
+    .select('*')
+    .eq('id', params.id)
     .single();
 
   return {
-    title: `Dojo Helpdesk | ${ticket?.title || "Ticket not found"}`,
+    title: `Dojo Helpdesk | ${ticket?.title || 'Ticket not found'}`,
   };
 }
 
 async function getTicket(id: string) {
   const supabase = createServerComponentClient({ cookies });
   const { data } = await supabase
-    .from("Tickets")
-    .select("*")
-    .eq("id", id)
+    .from('Tickets')
+    .select('*')
+    .eq('id', id)
     .single();
 
   if (!data) {

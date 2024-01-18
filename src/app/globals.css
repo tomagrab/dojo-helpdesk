@@ -101,11 +101,9 @@ p > a {
 
 /* nav styles */
 nav {
-  @apply mx-auto
-    my-10 flex
-    max-w-5xl items-center gap-5 
-    border-b-2 border-gray-200 
-    pb-4;
+  @apply mx-auto flex max-w-5xl
+    items-center gap-5 border-b-2 
+    border-gray-200 p-4;
 }
 nav a,
 nav span {
@@ -137,7 +135,7 @@ button:hover {
 
 /* form styles */
 form {
-  @apply flex flex-col gap-4 p-8 shadow-xl max-w-2xl w-full mx-auto;
+  @apply mx-auto flex w-full max-w-2xl flex-col gap-4 p-8 shadow-xl;
 }
 
 form input,
