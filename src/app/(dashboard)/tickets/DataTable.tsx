@@ -22,7 +22,7 @@ import {
 } from '@/components/ui/table';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface DataTableProps<TData, TValue> {
   columns: ColumnDef<TData, TValue>[];
@@ -51,9 +51,32 @@ export default function DataTable<TData, TValue>({
     },
   });
 
+  // Debugging: Log the current filter state
+  useEffect(() => {
+    console.log('Current column filters:', columnFilters);
+  }, [columnFilters]);
+
+  // Debugging: Log the current sorting state
+  useEffect(() => {
+    console.log('Current sorting state:', sorting);
+  }, [sorting]);
+
+  // Debugging: Log the table data
+  useEffect(() => {
+    console.log('Table data:', data);
+  }, [data]);
+
   return (
     <div>
       <div className="flex items-center gap-2 py-4">
+        <Input
+          placeholder="Filter ID..."
+          className="max-w-sm"
+          value={(table.getColumn('id')?.getFilterValue() as string) ?? ''}
+          onChange={event =>
+            table.getColumn('id')?.setFilterValue(event.target.value)
+          }
+        />
         <Input
           placeholder="Filter Titles..."
           value={(table.getColumn('title')?.getFilterValue() as string) ?? ''}

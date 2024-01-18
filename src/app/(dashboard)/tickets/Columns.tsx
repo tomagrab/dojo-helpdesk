@@ -20,6 +20,10 @@ import Link from 'next/link';
 export const getColumns = (user: User): ColumnDef<Ticket>[] => [
   {
     accessorKey: 'id',
+    accessorFn: ticket => {
+      return ticket.id.toString();
+    },
+
     header: ({ column }) => {
       return (
         <Button
