@@ -1,5 +1,5 @@
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Badge } from '@/components/ui/badge';
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -7,10 +7,10 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import LogoutButton from "@/components/ui/logoutButton";
-import { User } from "@supabase/supabase-js";
-import Link from "next/link";
+} from '@/components/ui/dropdown-menu';
+import LogoutButton from '@/components/ui/logoutButton';
+import { User } from '@supabase/supabase-js';
+import Link from 'next/link';
 
 type NavbarProps = {
   user?: User | undefined;
@@ -39,7 +39,7 @@ export default function Navbar({ user }: NavbarProps) {
         </DropdownMenu>
       </div>
 
-      <div className="hidden md:flex md:justify-between w-full">
+      <div className="hidden w-full md:flex md:justify-between">
         <div className="flex items-center gap-2">
           <Avatar>
             <AvatarImage src="/Images/ninja.png" />
@@ -57,12 +57,12 @@ export default function Navbar({ user }: NavbarProps) {
         ) : (
           <div className="flex items-center gap-2">
             <Badge>
-              <Link className="text-white" href={"/signup"}>
+              <Link className="text-white" href={'/signup'}>
                 Sign Up
               </Link>
             </Badge>
             <Badge>
-              <Link className="text-white" href={"/login"}>
+              <Link className="text-white" href={'/login'}>
                 Login
               </Link>
             </Badge>

@@ -1,11 +1,11 @@
-"use client";
-import { updateTicket } from "@/app/(dashboard)/tickets/actions";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Textarea } from "@/components/ui/textarea";
-import * as z from "zod";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
+'use client';
+import { updateTicket } from '@/app/(dashboard)/tickets/actions';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { Textarea } from '@/components/ui/textarea';
+import * as z from 'zod';
+import { useForm } from 'react-hook-form';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
   FormControl,
@@ -13,35 +13,35 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/form';
+import { Button } from '@/components/ui/button';
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
+} from '@/components/ui/select';
 
 const formSchema = z.object({
   id: z.string(),
   title: z
     .string()
     .min(3, {
-      message: "Title must be at least 3 characters long",
+      message: 'Title must be at least 3 characters long',
     })
     .max(100, {
-      message: "Title must be less than 100 characters long",
+      message: 'Title must be less than 100 characters long',
     }),
   body: z
     .string()
     .min(10, {
-      message: "Body must be at least 10 characters long",
+      message: 'Body must be at least 10 characters long',
     })
     .max(1000, {
-      message: "Body must be less than 1000 characters long",
+      message: 'Body must be less than 1000 characters long',
     }),
-  priority: z.enum(["low", "medium", "high"]),
+  priority: z.enum(['low', 'medium', 'high']),
   user_email: z.string(),
 });
 
@@ -49,7 +49,7 @@ type EditTicketFormProps = {
   id: string;
   title: string;
   body: string;
-  priority: "low" | "medium" | "high";
+  priority: 'low' | 'medium' | 'high';
   user_email: string;
 };
 
@@ -72,8 +72,6 @@ export default function EditTicketForm({
   });
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
-    console.log("This is being called");
-    console.log("values", values);
     await updateTicket(values);
   };
 

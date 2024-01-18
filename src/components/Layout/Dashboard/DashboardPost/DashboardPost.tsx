@@ -11,9 +11,7 @@ export default function DashboardPost({ title, children }: DashboardPostProps) {
       <CardHeader>
         <CardTitle>{title}</CardTitle>
       </CardHeader>
-      <CardContent>
-        <p>{children}</p>
-      </CardContent>
+      <CardContent>{children}</CardContent>
     </Card>
   );
 }
