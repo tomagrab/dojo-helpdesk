@@ -25,6 +25,9 @@ export default function Navbar({ user }: NavbarProps) {
           <h1>Dojo Helpdesk</h1>
           <Link href="/">Dashboard</Link>
           <Link href="/tickets">Tickets</Link>
+          {user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL ? (
+            <Link href="/users">Users</Link>
+          ) : null}
         </div>
         {user ? (
           <div className="flex items-center gap-2">

@@ -37,6 +37,11 @@ export default function NavbarDropdown({ title, user }: NavbarDropdownProps) {
         <DropdownMenuItem>
           <Link href="/tickets">Tickets</Link>
         </DropdownMenuItem>
+        {user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL ? (
+          <DropdownMenuItem>
+            <Link href="/users">Users</Link>
+          </DropdownMenuItem>
+        ) : null}
         <DropdownMenuSeparator />
         <DropdownMenuItem>
           <LogoutButton />

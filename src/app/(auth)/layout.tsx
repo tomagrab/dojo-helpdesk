@@ -18,9 +18,11 @@ export default async function AuthLayout({ children }: AuthLayoutProps) {
   return (
     <>
       <nav>
-        <h1>Dojo Helpdesk</h1>
-        <Link href={`/signup`}>Sign Up</Link>
-        <Link href={`/login`}>Login</Link>
+        <div className="flex items-center gap-2">
+          <h1>Dojo Helpdesk</h1>
+          <Link href={`/signup`}>Sign Up</Link>
+          <Link href={`/login`}>Login</Link>
+        </div>
       </nav>
       {children}
     </>
