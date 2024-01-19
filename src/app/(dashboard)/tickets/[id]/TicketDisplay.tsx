@@ -3,7 +3,7 @@
 import { Ticket } from '@/lib/Types/Ticket/Ticket';
 import { User } from '@supabase/supabase-js';
 import { useState } from 'react';
-import EditTicketForm from './EditTicketForm';
+import EditTicketForm from '@/app/(dashboard)/tickets/[id]/EditTicketForm';
 import {
   Card,
   CardContent,
