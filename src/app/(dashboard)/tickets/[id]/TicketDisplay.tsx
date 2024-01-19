@@ -3,7 +3,6 @@
 import { Ticket } from '@/lib/Types/Ticket/Ticket';
 import { User } from '@supabase/supabase-js';
 import { useState } from 'react';
-import EditTicketForm from '@/app/(dashboard)/tickets/[id]/EditTicketForm';
 import {
   Card,
   CardContent,
@@ -12,6 +11,7 @@ import {
   CardTitle,
 } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import EditTicketForm from './EditTicketForm';
 
 type TicketDisplayProps = {
   ticket: Ticket;
