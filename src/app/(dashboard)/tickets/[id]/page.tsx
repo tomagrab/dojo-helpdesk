@@ -1,17 +1,14 @@
 import { Badge } from '@/components/ui/badge';
-import {
-  Card,
-  CardContent,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from '@/components/ui/card';
+
 import { Ticket } from '@/lib/Types/Ticket/Ticket';
-import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import {
+  User,
+  createServerComponentClient,
+} from '@supabase/auth-helpers-nextjs';
 import { notFound } from 'next/navigation';
 import { cookies } from 'next/headers';
 import DeleteButton from '@/components/ui/deleteButton';
-import EditTicketForm from './editTicketForm';
+import TicketDisplay from './TicketDisplay';
 
 type TicketDetailsProps = {
   params: {
@@ -51,7 +48,7 @@ export default async function TicketDetails({ params }: TicketDetailsProps) {
   const ticket: Ticket = await getTicket(params.id);
   const supabase = createServerComponentClient({ cookies });
   const { data } = await supabase.auth.getSession();
-  const user = data?.session?.user;
+  const user: User = data?.session?.user as User;
   return (
     <main>
       <nav className="flex justify-between">
@@ -68,31 +65,7 @@ export default async function TicketDetails({ params }: TicketDetailsProps) {
         ) : null}
       </nav>
 
-      {user?.email === ticket.user_email ||
-      user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL ? (
-        <EditTicketForm
-          id={ticket.id}
-          title={ticket.title}
-          body={ticket.body}
-          priority={ticket.priority}
-          user_email={ticket.user_email}
-        />
-      ) : (
-        <Card>
-          <CardHeader>
-            <CardTitle>{ticket.title}</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <p>{ticket.body}</p>
-          </CardContent>
-          <CardFooter className="flex justify-between">
-            <Badge>{ticket.user_email}</Badge>
-            <Badge className={`pill ${ticket.priority}`}>
-              {ticket.priority}
-            </Badge>
-          </CardFooter>
-        </Card>
-      )}
+      <TicketDisplay ticket={ticket} user={user} />
     </main>
   );
 }

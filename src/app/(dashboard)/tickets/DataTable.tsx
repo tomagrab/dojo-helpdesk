@@ -63,7 +63,7 @@ export default function DataTable<TData, TValue>({
 
   return (
     <div>
-      <div className="flex items-center gap-2 py-4">
+      <div className="flex flex-col items-center gap-2 py-4 sm:flex-row">
         <Input
           placeholder="Filter ID..."
           className="max-w-sm"
@@ -102,11 +102,9 @@ export default function DataTable<TData, TValue>({
         />
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <Button variant="outline" className="ml-auto">
-              Columns
-            </Button>
+            <Button variant="outline">Columns</Button>
           </DropdownMenuTrigger>
-          <DropdownMenuContent align="end">
+          <DropdownMenuContent>
             {table
               .getAllColumns()
               .filter(column => column.getCanHide())
