@@ -4,14 +4,19 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { User } from '@supabase/supabase-js';
+} from "@/components/ui/card";
+import { User } from "@supabase/supabase-js";
 
 type UserCardProps = {
   user: User;
 };
 
+const formattedDate = (date: string) => {
+  return new Date(date).toLocaleString();
+};
+
 export default function UserCard({ user }: UserCardProps) {
+  console.log(typeof user.created_at);
   return (
     <Card>
       <CardHeader>
@@ -19,10 +24,11 @@ export default function UserCard({ user }: UserCardProps) {
         <CardDescription>Role: {user.role}</CardDescription>
       </CardHeader>
       <CardContent>
-        <p>Created at: {user.created_at}</p>
-        <p>Updated at: {user.updated_at}</p>
-        <p>Confirmed at: {user.confirmed_at}</p>
-        <p>Last sign in: {user.last_sign_in_at}</p>
+        <p>Created at: {formattedDate(user.created_at)}</p>
+
+        {user.last_sign_in_at ? (
+          <p>Last sign in: {formattedDate(user.last_sign_in_at)}</p>
+        ) : null}
       </CardContent>
     </Card>
   );
