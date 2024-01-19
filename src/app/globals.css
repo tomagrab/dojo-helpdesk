@@ -180,9 +180,6 @@ form button {
 }
 
 /* pill styles */
-.pill {
-  @apply inline-block px-2 py-1 text-xs font-semibold;
-}
 .pill.high {
   @apply bg-red-300 text-red-600;
 }
@@ -191,8 +188,4 @@ form button {
 }
 .pill.low {
   @apply bg-emerald-300 text-emerald-600;
-}
-.card .pill {
-  @apply absolute bottom-0 right-0 
-    rounded-tl-md;
 }

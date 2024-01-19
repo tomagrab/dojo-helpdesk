@@ -14,7 +14,13 @@ import {
 import { Ticket } from '@/lib/Types/Ticket/Ticket';
 import { User } from '@supabase/supabase-js';
 import { ColumnDef } from '@tanstack/react-table';
-import { ArrowUpDown, MoreHorizontal } from 'lucide-react';
+import {
+  ArrowUpDown,
+  ChevronsDown,
+  ChevronsRight,
+  ChevronsUp,
+  MoreHorizontal,
+} from 'lucide-react';
 import Link from 'next/link';
 
 export const getColumns = (user: User): ColumnDef<Ticket>[] => [
@@ -33,6 +39,11 @@ export const getColumns = (user: User): ColumnDef<Ticket>[] => [
           <ArrowUpDown className="ml-2 h-4 w-4" />
         </Button>
       );
+    },
+    cell: ({ row }) => {
+      const ticket = row.original;
+
+      return <Link href={`/tickets/${ticket.id}`}>{ticket.id}</Link>;
     },
   },
   {
@@ -75,7 +86,25 @@ export const getColumns = (user: User): ColumnDef<Ticket>[] => [
       const ticket = row.original;
 
       return (
-        <Badge className={`pill ${ticket.priority}`}>{ticket.priority}</Badge>
+        <Badge className={`pill ${ticket.priority}`}>
+          {/* Ternary operator to check if the priority is low, medium, or high */}
+          {ticket.priority === 'low' ? (
+            <div className="flex flex-row items-center gap-2">
+              {ticket.priority}
+              <ChevronsDown />
+            </div>
+          ) : ticket.priority === 'medium' ? (
+            <div className="flex flex-row items-center gap-2">
+              {ticket.priority}
+              <ChevronsRight />
+            </div>
+          ) : (
+            <div className="flex flex-row items-center gap-2">
+              {ticket.priority}
+              <ChevronsUp />
+            </div>
+          )}
+        </Badge>
       );
     },
   },
