@@ -61,7 +61,7 @@ export default async function TicketDetails({ params }: TicketDetailsProps) {
           <Badge className={`pill ${ticket.priority}`}>{ticket.priority}</Badge>
         </div>
         {user?.email === ticket.user_email ||
-        user?.email === process.env.ADMIN_EMAIL ? (
+        user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL ? (
           <div className="flex items-center">
             <DeleteButton id={ticket.id} />
           </div>
@@ -69,7 +69,7 @@ export default async function TicketDetails({ params }: TicketDetailsProps) {
       </nav>
 
       {user?.email === ticket.user_email ||
-      user?.email === process.env.ADMIN_EMAIL ? (
+      user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL ? (
         <EditTicketForm
           id={ticket.id}
           title={ticket.title}

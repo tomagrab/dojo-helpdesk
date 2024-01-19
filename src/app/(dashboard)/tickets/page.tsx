@@ -50,6 +50,7 @@ async function getUser() {
 export default async function Tickets() {
   const tickets: Ticket[] = await getTickets();
   const user: User = await getUser();
+  console.log(user);
   return (
     <main>
       <nav className="flex items-center justify-between">

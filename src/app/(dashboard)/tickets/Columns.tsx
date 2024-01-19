@@ -102,7 +102,6 @@ export const getColumns = (user: User): ColumnDef<Ticket>[] => [
     id: 'actions',
     cell: ({ row }) => {
       const ticket = row.original;
-
       return (
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
@@ -117,7 +116,7 @@ export const getColumns = (user: User): ColumnDef<Ticket>[] => [
               <Link href={`/tickets/${ticket.id}`}>Open Ticket</Link>
             </DropdownMenuItem>
             <DropdownMenuSeparator />
-            {user.email === process.env.ADMIN_EMAIL ||
+            {user.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL ||
             user.email === ticket.user_email ? (
               <DropdownMenuItem className="flex flex-col items-center">
                 <DeleteButton id={ticket.id} />
