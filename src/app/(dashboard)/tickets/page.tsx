@@ -3,7 +3,7 @@ import Loading from '@/app/(dashboard)/tickets/loading';
 import Link from 'next/link';
 import { Badge } from '@/components/ui/badge';
 import { Metadata } from 'next';
-import { Ticket } from '@/lib/Types/Ticket/Ticket';
+import { TicketType } from '@/lib/Types/Ticket/TicketType';
 import {
   User,
   createServerComponentClient,
@@ -27,7 +27,7 @@ async function getTickets() {
     throw new Error(error.message);
   }
 
-  return data as Ticket[];
+  return data as TicketType[];
 }
 
 async function getUser() {
@@ -48,7 +48,7 @@ async function getUser() {
 }
 
 export default async function Tickets() {
-  const tickets: Ticket[] = await getTickets();
+  const tickets: TicketType[] = await getTickets();
   const user: User = await getUser();
   return (
     <main>

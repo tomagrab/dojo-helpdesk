@@ -1,6 +1,6 @@
 'use client';
 
-import { Ticket } from '@/lib/Types/Ticket/Ticket';
+import { TicketType } from '@/lib/Types/Ticket/TicketType';
 import { User } from '@supabase/supabase-js';
 import { useState } from 'react';
 import {
@@ -14,7 +14,7 @@ import { Badge } from '@/components/ui/badge';
 import EditTicketForm from './EditTicketForm';
 
 type TicketDisplayProps = {
-  ticket: Ticket;
+  ticket: TicketType;
   user: User;
 };
 

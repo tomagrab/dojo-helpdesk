@@ -1,4 +1,4 @@
-import { Ticket } from '@/lib/Types/Ticket/Ticket';
+import { Ticket } from '@/lib/Types/Ticket/TicketType';
 import { createRouteHandlerClient } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
 import { NextResponse } from 'next/server';

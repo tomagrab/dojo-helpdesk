@@ -1,7 +1,7 @@
 'use server';
 
 import { FormTicket } from '@/lib/Types/FormTicket/FormTicket';
-import { Ticket } from '@/lib/Types/Ticket/Ticket';
+import { TicketType } from '@/lib/Types/Ticket/TicketType';
 import { createServerActionClient } from '@supabase/auth-helpers-nextjs';
 import { revalidatePath } from 'next/cache';
 import { cookies } from 'next/headers';
@@ -28,7 +28,7 @@ export async function addTicket(ticket: FormTicket) {
   redirect('/tickets');
 }
 
-export async function updateTicket(ticket: Ticket) {
+export async function updateTicket(ticket: TicketType) {
   const supabase = createServerActionClient({ cookies });
 
   // Insert the data

@@ -1,4 +1,4 @@
-export type Ticket = {
+export type TicketType = {
   id: string;
   title: string;
   body: string;

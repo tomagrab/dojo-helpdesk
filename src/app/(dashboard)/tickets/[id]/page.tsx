@@ -1,6 +1,6 @@
 import { Badge } from '@/components/ui/badge';
 
-import { Ticket } from '@/lib/Types/Ticket/Ticket';
+import { TicketType } from '@/lib/Types/Ticket/TicketType';
 import {
   User,
   createServerComponentClient,
@@ -45,7 +45,7 @@ async function getTicket(id: string) {
 }
 
 export default async function TicketDetails({ params }: TicketDetailsProps) {
-  const ticket: Ticket = await getTicket(params.id);
+  const ticket: TicketType = await getTicket(params.id);
   const supabase = createServerComponentClient({ cookies });
   const { data } = await supabase.auth.getSession();
   const user: User = data?.session?.user as User;
