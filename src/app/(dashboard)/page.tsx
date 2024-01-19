@@ -1,5 +1,5 @@
 import DashboardPost from '@/components/Layout/Dashboard/DashboardPost/DashboardPost';
-import YouTubeIFrame from '@/components/ui/YouTubeIFrame';
+import YouTubeIFrame from '@/components/Layout/Dashboard/DashboardPost/YouTubeIFrame';
 import { Badge } from '@/components/ui/badge';
 import { Separator } from '@/components/ui/separator';
 import Link from 'next/link';

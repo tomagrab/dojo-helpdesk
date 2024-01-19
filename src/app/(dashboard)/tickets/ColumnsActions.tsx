@@ -7,7 +7,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
-import { TicketDialog } from '@/app/(dashboard)/tickets/TicketDialog';
+import { TicketDialog } from '@/components/Layout/Dashboard/Tickets/DataTable/Dialog/TicketDialog';
 import { Button } from '@/components/ui/button';
 import { MoreHorizontalIcon } from 'lucide-react';
 import { DialogTrigger } from '@/components/ui/dialog';

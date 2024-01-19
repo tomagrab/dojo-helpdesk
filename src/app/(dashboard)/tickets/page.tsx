@@ -9,7 +9,7 @@ import {
   createServerComponentClient,
 } from '@supabase/auth-helpers-nextjs';
 import { cookies } from 'next/headers';
-import TicketDataTable from './TicketDataTable';
+import TicketDataTable from '../../../components/Layout/Dashboard/Tickets/DataTable/TicketDataTable';
 
 export const metadata: Metadata = {
   title: 'Dojo Helpdesk | Tickets',
@@ -52,7 +52,7 @@ export default async function Tickets() {
   const user: User = await getUser();
   return (
     <main>
-      <nav className="flex items-center justify-between">
+      <div className="flex items-center justify-between">
         <div className="flex items-center gap-4">
           <h2>Tickets</h2>
           <p>
@@ -66,7 +66,7 @@ export default async function Tickets() {
             </Badge>
           </Link>
         </div>
-      </nav>
+      </div>
 
       <Suspense fallback={<Loading />}>
         <TicketDataTable user={user} tickets={tickets} />

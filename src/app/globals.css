@@ -70,67 +70,32 @@
   * {
     @apply border-border;
   }
+
   body {
     @apply bg-background text-foreground;
+    @apply px-8 py-8 md:px-16 lg:px-32 !important;
+  }
+
+  h1 {
+    @apply text-lg font-bold;
+  }
+
+  h2 {
+    @apply text-base font-bold;
+  }
+
+  nav {
+    @apply mb-4 flex items-center justify-between border-b pb-4;
+  }
+
+  nav button {
+    @apply flex items-center gap-2;
   }
 }
 
 html,
 body {
   margin: 0 !important;
-  margin-right: 0 !important;
-}
-
-/* base styles */
-body {
-  @apply text-gray-500;
-}
-h1,
-h2 {
-  @apply text-lg font-bold text-primary;
-}
-main {
-  @apply mx-auto my-12 max-w-5xl px-8;
-}
-main > h2 {
-  @apply mb-4 pb-2 text-base;
-}
-p > a {
-  @apply text-primary underline;
-}
-
-/* nav styles */
-nav {
-  @apply mx-auto flex max-w-5xl
-    items-center gap-5 border-b-2 
-    border-gray-200 p-4;
-}
-nav a,
-nav span {
-  @apply text-gray-500;
-}
-nav a:hover {
-  @apply text-black;
-}
-main nav {
-  @apply border-0;
-}
-
-/* button styles */
-button {
-  @apply flex items-center 
-    justify-between 
-    gap-2 rounded-sm px-3 py-2
-    text-sm;
-}
-button:hover {
-  @apply bg-opacity-90;
-}
-.btn-primary {
-  @apply bg-primary text-white;
-}
-.btn-secondary {
-  @apply bg-gray-200 text-gray-900;
 }
 
 /* form styles */
@@ -147,36 +112,6 @@ form select {
 }
 form button {
   @apply mx-auto block;
-}
-
-/* feedback styles */
-.error {
-  @apply mx-auto 
-    my-4 
-    block
-    max-w-fit 
-    rounded-sm border-2 
-    border-red-500
-    bg-red-300
-    px-2
-    py-1 text-red-800;
-}
-
-/* card styles */
-.card {
-  @apply relative 
-    my-4 
-    overflow-hidden 
-    rounded-md bg-white px-4 
-    py-3 
-    shadow-sm;
-}
-.card h3 {
-  @apply mb-0 text-sm font-bold 
-    text-gray-700;
-}
-.card p {
-  @apply my-4 text-sm leading-6;
 }
 
 /* pill styles */

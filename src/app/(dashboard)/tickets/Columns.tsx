@@ -11,9 +11,9 @@ import {
   Ticket,
 } from 'lucide-react';
 import Link from 'next/link';
-import ColumnHeader from '@/components/ui/ColumnHeader';
+import ColumnHeader from '@/components/Layout/Dashboard/Tickets/DataTable/Columns/ColumnHeader';
 import ColumnsActions from './ColumnsActions';
-import ColumnCell from '@/components/ui/ColumnCell';
+import ColumnCell from '@/components/Layout/Dashboard/Tickets/DataTable/Columns/ColumnCell';
 
 export const getColumns = (user: User): ColumnDef<TicketType>[] => [
   {

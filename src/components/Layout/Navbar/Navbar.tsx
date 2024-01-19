@@ -1,16 +1,9 @@
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Badge } from '@/components/ui/badge';
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuLabel,
-  DropdownMenuSeparator,
-  DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
 import LogoutButton from '@/components/ui/logoutButton';
 import { User } from '@supabase/supabase-js';
 import Link from 'next/link';
+import NavbarDropdown from './NavbarDropdown/NavbarDropdown';
 
 type NavbarProps = {
   user?: User | undefined;
@@ -20,27 +13,7 @@ export default function Navbar({ user }: NavbarProps) {
   return (
     <nav>
       <div className="md:hidden">
-        <DropdownMenu>
-          <DropdownMenuTrigger>
-            <Avatar>
-              <AvatarImage src="/Images/ninja.png" />
-              <AvatarFallback>DH</AvatarFallback>
-            </Avatar>
-            <h1>Dojo Helpdesk</h1>
-          </DropdownMenuTrigger>
-          <DropdownMenuContent>
-            <DropdownMenuItem>
-              <Link href="/">Dashboard</Link>
-            </DropdownMenuItem>
-            <DropdownMenuItem>
-              <Link href="/tickets">Tickets</Link>
-            </DropdownMenuItem>
-            <DropdownMenuSeparator />
-            <DropdownMenuItem>
-              <LogoutButton />
-            </DropdownMenuItem>
-          </DropdownMenuContent>
-        </DropdownMenu>
+        <NavbarDropdown title="Dojo Helpdesk" user={user} />
       </div>
 
       <div className="hidden w-full md:flex md:justify-between">

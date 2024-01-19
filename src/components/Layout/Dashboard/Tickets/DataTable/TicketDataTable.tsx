@@ -1,8 +1,8 @@
 'use client';
 import { TicketType } from '@/lib/Types/Ticket/TicketType';
 import { User } from '@supabase/auth-helpers-nextjs';
-import { getColumns } from './Columns';
-import DataTable from './DataTable';
+import { getColumns } from '../../../../../app/(dashboard)/tickets/Columns';
+import DataTable from '../../../../../app/(dashboard)/tickets/DataTable';
 
 type TicketDataTableProps = {
   tickets: TicketType[];
