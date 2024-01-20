@@ -91,6 +91,10 @@
   nav button {
     @apply flex items-center gap-2;
   }
+
+  HoverContent {
+    @apply bg-popover text-popover-foreground;
+  }
 }
 
 html,

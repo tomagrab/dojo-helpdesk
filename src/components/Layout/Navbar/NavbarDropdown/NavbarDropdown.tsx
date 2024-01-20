@@ -32,18 +32,27 @@ export default function NavbarDropdown({
         <h1>{title}</h1>
       </HoverCardTrigger>
       <HoverCardContent className="flex flex-col items-center gap-2">
-        {profile?.full_name || user?.email ? (
-          <Badge>{profile?.full_name ?? user?.email}</Badge>
+        {profile?.username || profile?.full_name || user?.email ? (
+          <Badge>
+            {profile?.username ?? profile?.full_name ?? user?.email}
+          </Badge>
         ) : null}
-        <Link href="/">
-          <Button variant={`ghost`}>Dashboard</Button>
+
+        {profile ? (
+          <Link href="/profile" className="hover:underline">
+            Profile
+          </Link>
+        ) : null}
+
+        <Link href="/" className="hover:underline">
+          Dashboard
         </Link>
-        <Link href="/tickets">
-          <Button variant={`ghost`}>Tickets</Button>
+        <Link href="/tickets" className="hover:underline">
+          Tickets
         </Link>
         {user?.email === process.env.NEXT_PUBLIC_ADMIN_EMAIL ? (
-          <Link href="/users">
-            <Button variant={`ghost`}>Users</Button>
+          <Link href="/users" className="hover:underline">
+            Users
           </Link>
         ) : null}
         <LogoutButton />

@@ -11,7 +11,6 @@ import {
   HoverCardContent,
   HoverCardTrigger,
 } from '@/components/ui/hover-card';
-import { Button } from '@/components/ui/button';
 
 type NavbarProps = {
   user?: User | undefined;
@@ -89,9 +88,11 @@ export default async function Navbar({ user }: NavbarProps) {
                 </Avatar>
               </HoverCardTrigger>
               <HoverCardContent className="flex flex-col items-center gap-2">
-                <Link href="/profile">
-                  <Button variant={`ghost`}>Profile</Button>
-                </Link>
+                {profile ? (
+                  <Link href="/profile" className="hover:underline">
+                    Profile
+                  </Link>
+                ) : null}
                 <LogoutButton />
               </HoverCardContent>
             </HoverCard>
