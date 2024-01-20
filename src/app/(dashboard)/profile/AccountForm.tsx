@@ -19,6 +19,8 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
+import { Badge } from "@/components/ui/badge";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const formSchema = z.object({
   full_name: z
@@ -50,6 +52,7 @@ export default function AccountForm({ user }: { user: User | null }) {
   const [username, setUsername] = useState<string | null>(null);
   const [website, setWebsite] = useState<string | null>(null);
   const [avatar_url, setAvatarUrl] = useState<string | null>(null);
+  const [editMode, setEditMode] = useState(false);
 
   const getProfile = useCallback(async () => {
     try {
@@ -66,6 +69,7 @@ export default function AccountForm({ user }: { user: User | null }) {
       }
 
       if (data) {
+        console.log(data);
         setfull_name(data.full_name);
         setUsername(data.username);
         setWebsite(data.website);
@@ -96,15 +100,6 @@ export default function AccountForm({ user }: { user: User | null }) {
     try {
       setLoading(true);
 
-      console.log("updateProfile", {
-        id: user?.id as string,
-        full_name,
-        username,
-        website,
-        avatar_url,
-        updated_at: new Date().toISOString(),
-      });
-
       const { error } = await supabase.from("profiles").upsert({
         id: user?.id as string,
         full_name,
@@ -122,7 +117,6 @@ export default function AccountForm({ user }: { user: User | null }) {
   }
 
   const handleUpdateProfile = async (values: z.infer<typeof formSchema>) => {
-    console.log(values);
     await updateProfile(values);
   };
 
@@ -139,6 +133,25 @@ export default function AccountForm({ user }: { user: User | null }) {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(handleUpdateProfile)}>
+        <div className="flex items-center justify-center">
+          <Avatar>
+            <AvatarImage
+              height={64}
+              width={64}
+              src={avatar_url ?? ""}
+              alt={username ?? ""}
+            />
+            <AvatarFallback>{username?.charAt(0)}</AvatarFallback>
+          </Avatar>
+        </div>
+        <div>
+          <Badge
+            className={`pill cursor-pointer hover:bg-yellow-500 transition-colors duration-300 ${editMode ? "bg-yellow-500" : "bg-blue-500"} `}
+            onClick={() => setEditMode(!editMode)}
+          >
+            {editMode ? "Cancel" : "Edit"}
+          </Badge>
+        </div>
         <FormField
           control={form.control}
           name="full_name"
@@ -149,7 +162,11 @@ export default function AccountForm({ user }: { user: User | null }) {
                   <Label>Full Name</Label>
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input
+                    {...field}
+                    disabled={!editMode}
+                    placeholder={full_name ?? ""}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -166,7 +183,11 @@ export default function AccountForm({ user }: { user: User | null }) {
                   <Label>Username</Label>
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input
+                    {...field}
+                    disabled={!editMode}
+                    placeholder={username ?? ""}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -183,7 +204,11 @@ export default function AccountForm({ user }: { user: User | null }) {
                   <Label>Website</Label>
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input
+                    {...field}
+                    disabled={!editMode}
+                    placeholder={website ?? ""}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -200,7 +225,11 @@ export default function AccountForm({ user }: { user: User | null }) {
                   <Label>Avatar URL</Label>
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input
+                    {...field}
+                    disabled={!editMode}
+                    placeholder={avatar_url ?? ""}
+                  />
                 </FormControl>
                 <FormMessage />
               </FormItem>
