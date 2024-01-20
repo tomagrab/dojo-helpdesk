@@ -1,8 +1,8 @@
-import UserCard from "@/components/Layout/Dashboard/Users/UserCard/UserCard";
-import { createServerComponentClient } from "@supabase/auth-helpers-nextjs";
-import { createClient } from "@supabase/supabase-js";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import UserCard from '@/components/Layout/Dashboard/Users/UserCard/UserCard';
+import { createServerComponentClient } from '@supabase/auth-helpers-nextjs';
+import { createClient } from '@supabase/supabase-js';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 const getUsers = async () => {
   const supabase = createClient(
@@ -13,7 +13,7 @@ const getUsers = async () => {
         autoRefreshToken: false,
         persistSession: false,
       },
-    }
+    },
   );
 
   const {
@@ -23,7 +23,7 @@ const getUsers = async () => {
 
   if (error) {
     console.error(error);
-    redirect("/");
+    redirect('/');
   }
 
   return users;
@@ -38,17 +38,17 @@ const getUserTickets = async (user_email: string) => {
         autoRefreshToken: false,
         persistSession: false,
       },
-    }
+    },
   );
 
   const { data, error } = await supabase
-    .from("Tickets")
-    .select("*")
-    .eq("user_email", user_email);
+    .from('Tickets')
+    .select('*')
+    .eq('user_email', user_email);
 
   if (error) {
     console.error(error);
-    redirect("/");
+    redirect('/');
   }
 
   return data;
@@ -61,11 +61,11 @@ export default async function Users() {
 
   if (error) {
     console.error(error);
-    redirect("/");
+    redirect('/');
   }
 
   if (!user) {
-    redirect("/login");
+    redirect('/login');
   }
   /* 
   if (user.email !== process.env.NEXT_PUBLIC_ADMIN_EMAIL) {
@@ -83,13 +83,11 @@ export default async function Users() {
     userTickets.push(tickets);
   }
 
-  console.log(userTickets);
-
   return (
     <div>
       <h1>Users</h1>
       <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {users.map((user) => (
+        {users.map(user => (
           <UserCard key={user.id} user={user} />
         ))}
       </div>

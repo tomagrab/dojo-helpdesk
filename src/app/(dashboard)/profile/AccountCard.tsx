@@ -17,7 +17,7 @@ type AccountCardProps = {
 
 export default function AccountCard({ user, profile }: AccountCardProps) {
   return (
-    <Card className="my-4">
+    <Card className="my-4 ">
       <CardHeader className="flex flex-col items-center">
         <CardTitle className="flex items-center gap-2">
           <div className="flex items-center justify-center">

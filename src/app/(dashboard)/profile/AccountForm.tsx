@@ -1,5 +1,5 @@
 'use client';
-import { useCallback, useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Database } from '@/lib/Types/Database/Database.types';
 import {
   User,
@@ -19,10 +19,8 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { Label } from '@/components/ui/label';
 import { Input } from '@/components/ui/input';
 import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import { Profile } from '@/lib/Types/Profile/Profile';
-import AccountCard from './AccountCard';
+import { updateProfile } from './actions';
 
 const formSchema = z.object({
   full_name: z
@@ -50,48 +48,18 @@ const formSchema = z.object({
 type AccountFormProps = {
   user: User | null;
   profile: Profile | null;
+  editMode: boolean;
+  setEditMode?: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
-export default function AccountForm({ user, profile }: AccountFormProps) {
+export default function AccountForm({
+  user,
+  profile,
+  editMode,
+  setEditMode,
+}: AccountFormProps) {
   const supabase = createClientComponentClient<Database>();
   const [loading, setLoading] = useState(false);
-  const [editMode, setEditMode] = useState(false);
-
-  async function updateProfile({
-    username,
-    full_name,
-    website,
-    avatar_url,
-  }: {
-    username: string | null;
-    full_name: string | null;
-    website: string | null;
-    avatar_url: string | null;
-  }) {
-    try {
-      setLoading(true);
-
-      const { error } = await supabase.from('profiles').upsert({
-        id: user?.id as string,
-        full_name,
-        username,
-        website,
-        avatar_url,
-        updated_at: new Date().toISOString(),
-      });
-      if (error) throw error;
-    } catch (error) {
-      console.error(error);
-    } finally {
-      setLoading(false);
-    }
-  }
-
-  const handleUpdateProfile = async (values: z.infer<typeof formSchema>) => {
-    setLoading(true);
-    await updateProfile(values);
-    setLoading(false);
-  };
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -103,95 +71,93 @@ export default function AccountForm({ user, profile }: AccountFormProps) {
     },
   });
 
+  const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    try {
+      setLoading(true);
+      await updateProfile(values);
+    } catch (error) {
+      console.error(error);
+    } finally {
+      setLoading(false);
+      setEditMode!(false);
+    }
+  };
+
   return (
-    <>
-      <div>
-        <Badge
-          className={`pill cursor-pointer transition-colors duration-300 hover:bg-yellow-500 ${editMode ? 'bg-yellow-500' : 'bg-blue-500'} `}
-          onClick={() => setEditMode(!editMode)}
-        >
-          {editMode ? 'Cancel' : 'Edit'}
-        </Badge>
-      </div>
-      {editMode ? (
-        <Form {...form}>
-          <form onSubmit={form.handleSubmit(handleUpdateProfile)}>
-            <FormField
-              control={form.control}
-              name="full_name"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel>
-                      <Label>Full Name</Label>
-                    </FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled={!editMode} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-            />
-            <FormField
-              control={form.control}
-              name="username"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel>
-                      <Label>Username</Label>
-                    </FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled={!editMode} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-            />
-            <FormField
-              control={form.control}
-              name="website"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel>
-                      <Label>Website</Label>
-                    </FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled={!editMode} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-            />
-            <FormField
-              control={form.control}
-              name="avatar_url"
-              render={({ field }) => {
-                return (
-                  <FormItem>
-                    <FormLabel>
-                      <Label>Avatar URL</Label>
-                    </FormLabel>
-                    <FormControl>
-                      <Input {...field} disabled={!editMode} />
-                    </FormControl>
-                    <FormMessage />
-                  </FormItem>
-                );
-              }}
-            />
-            <Button type="submit" disabled={loading}>
-              {loading ? 'Loading ...' : 'Update'}
-            </Button>
-          </form>
-        </Form>
-      ) : (
-        <AccountCard user={user} profile={profile} />
-      )}
-    </>
+    <Form {...form}>
+      <form onSubmit={form.handleSubmit(handleSubmit)}>
+        <FormField
+          control={form.control}
+          name="full_name"
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel>
+                  <Label>Full Name</Label>
+                </FormLabel>
+                <FormControl>
+                  <Input {...field} disabled={!editMode} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
+        />
+        <FormField
+          control={form.control}
+          name="username"
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel>
+                  <Label>Username</Label>
+                </FormLabel>
+                <FormControl>
+                  <Input {...field} disabled={!editMode} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
+        />
+        <FormField
+          control={form.control}
+          name="website"
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel>
+                  <Label>Website</Label>
+                </FormLabel>
+                <FormControl>
+                  <Input {...field} disabled={!editMode} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
+        />
+        <FormField
+          control={form.control}
+          name="avatar_url"
+          render={({ field }) => {
+            return (
+              <FormItem>
+                <FormLabel>
+                  <Label>Avatar URL</Label>
+                </FormLabel>
+                <FormControl>
+                  <Input {...field} disabled={!editMode} />
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            );
+          }}
+        />
+        <Button type="submit" disabled={loading}>
+          {loading ? 'Loading ...' : 'Update'}
+        </Button>
+      </form>
+    </Form>
   );
 }

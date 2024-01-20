@@ -5,6 +5,7 @@ import AccountForm from '@/app/(dashboard)/profile/AccountForm';
 import { User, createClient } from '@supabase/supabase-js';
 import { redirect } from 'next/navigation';
 import { Profile } from '@/lib/Types/Profile/Profile';
+import AccountDisplay from './AccountDisplay';
 
 const getProfile = async (user: User | undefined) => {
   const supabase = createClient(
@@ -51,5 +52,5 @@ export default async function Account() {
   } = await supabase.auth.getUser();
   const profile: Profile = (await getProfile(user as User)) as Profile;
 
-  return <AccountForm user={user} profile={profile} />;
+  return <AccountDisplay user={user} profile={profile} />;
 }
