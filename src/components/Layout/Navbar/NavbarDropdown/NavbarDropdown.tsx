@@ -2,14 +2,14 @@ import { User } from '@supabase/supabase-js';
 import Link from 'next/link';
 import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 import LogoutButton from '@/components/ui/logoutButton';
-import {
-  HoverCard,
-  HoverCardContent,
-  HoverCardTrigger,
-} from '@/components/ui/hover-card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Profile } from '@/lib/Types/Profile/Profile';
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/popover';
 
 type NavbarDropdownProps = {
   title: string;
@@ -23,15 +23,17 @@ export default function NavbarDropdown({
   profile,
 }: NavbarDropdownProps) {
   return (
-    <HoverCard>
-      <HoverCardTrigger className="flex items-center">
-        <Avatar>
-          <AvatarImage src="/Images/ninja.png" />
-          <AvatarFallback>DH</AvatarFallback>
-        </Avatar>
-        <h1>{title}</h1>
-      </HoverCardTrigger>
-      <HoverCardContent className="flex flex-col items-center gap-2">
+    <Popover>
+      <PopoverTrigger asChild className="flex items-center">
+        <Button variant={'outline'}>
+          <Avatar>
+            <AvatarImage src="/Images/ninja.png" />
+            <AvatarFallback>DH</AvatarFallback>
+          </Avatar>
+          <h1>{title}</h1>
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent className="flex flex-col items-center gap-2">
         {profile?.username || profile?.full_name || user?.email ? (
           <Badge>
             {profile?.username ?? profile?.full_name ?? user?.email}
@@ -56,7 +58,7 @@ export default function NavbarDropdown({
           </Link>
         ) : null}
         <LogoutButton />
-      </HoverCardContent>
-    </HoverCard>
+      </PopoverContent>
+    </Popover>
   );
 }
