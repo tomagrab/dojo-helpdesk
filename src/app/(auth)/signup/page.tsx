@@ -9,10 +9,11 @@ import { useRouter } from 'next/navigation';
 export default function SignUp() {
   const router = useRouter();
   const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (data: { email: string; password: string }) => {
     const { email, password } = data;
-
+    setLoading(true);
     setError('');
 
     const supabase = createClientComponentClient();
@@ -29,6 +30,8 @@ export default function SignUp() {
     if (!error) {
       router.push('/verify');
     }
+
+    setLoading(false);
   };
 
   return (
@@ -41,7 +44,12 @@ export default function SignUp() {
         </div>
       ) : null}
 
-      <AuthForm handleSubmit={handleSubmit} />
+      <AuthForm
+        handleSubmit={handleSubmit}
+        loading={loading}
+        buttonLoadingText={`Signing You Up...`}
+        buttonLabel={`Sign Up`}
+      />
     </main>
   );
 }

@@ -1,6 +1,4 @@
 'use client';
-
-import { useState } from 'react';
 import * as z from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -18,6 +16,9 @@ import { Button } from '@/components/ui/button';
 
 type AuthFormProps = {
   handleSubmit: (data: { email: string; password: string }) => void;
+  loading: boolean;
+  buttonLoadingText: string;
+  buttonLabel: string;
 };
 
 const formSchema = z.object({
@@ -29,10 +30,12 @@ const formSchema = z.object({
   }),
 });
 
-export default function AuthForm({ handleSubmit }: AuthFormProps) {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-
+export default function AuthForm({
+  handleSubmit,
+  loading,
+  buttonLoadingText,
+  buttonLabel,
+}: AuthFormProps) {
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -78,7 +81,9 @@ export default function AuthForm({ handleSubmit }: AuthFormProps) {
             );
           }}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">
+          {loading ? buttonLoadingText : buttonLabel}
+        </Button>
       </form>
     </Form>
   );

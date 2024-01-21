@@ -7,10 +7,12 @@ import { useState } from 'react';
 import AuthForm from '@/app/(auth)/AuthForm';
 
 export default function Login() {
-  const [error, setError] = useState(''); // [1
+  const [error, setError] = useState('');
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const handleSubmit = async (data: { email: string; password: string }) => {
     const { email, password } = data;
+    setLoading(true);
     setError('');
 
     const supabase = createClientComponentClient();
@@ -26,6 +28,8 @@ export default function Login() {
     } else {
       router.push('/');
     }
+
+    setLoading(false);
   };
 
   return (
@@ -36,7 +40,12 @@ export default function Login() {
           <p>{error}</p>
         </div>
       ) : null}
-      <AuthForm handleSubmit={handleSubmit} />
+      <AuthForm
+        handleSubmit={handleSubmit}
+        loading={loading}
+        buttonLoadingText={`Logging You In...`}
+        buttonLabel={`Log In`}
+      />
     </main>
   );
 }
