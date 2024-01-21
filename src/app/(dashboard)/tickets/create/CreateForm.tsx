@@ -22,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useState } from 'react';
 
 const formSchema = z.object({
   title: z
@@ -44,6 +45,8 @@ const formSchema = z.object({
 });
 
 export default function CreateForm() {
+  const [loading, setLoading] = useState(false);
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -54,7 +57,9 @@ export default function CreateForm() {
   });
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    setLoading(true);
     await addTicket(values);
+    setLoading(false);
   };
 
   return (
@@ -70,7 +75,7 @@ export default function CreateForm() {
                   <Label>Title</Label>
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} disabled={loading} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -87,7 +92,7 @@ export default function CreateForm() {
                   <Label>Body</Label>
                 </FormLabel>
                 <FormControl>
-                  <Textarea {...field} />
+                  <Textarea {...field} disabled={loading} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -103,7 +108,7 @@ export default function CreateForm() {
                 <FormLabel>
                   <Label>Priority</Label>
                 </FormLabel>
-                <Select onValueChange={field.onChange}>
+                <Select onValueChange={field.onChange} disabled={loading}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a priority" />
@@ -120,7 +125,9 @@ export default function CreateForm() {
             );
           }}
         />
-        <Button type="submit">Submit</Button>
+        <Button type="submit">
+          {loading ? 'Creating...' : 'Create ticket'}
+        </Button>
       </form>
     </Form>
   );

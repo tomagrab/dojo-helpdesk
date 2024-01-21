@@ -22,6 +22,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select';
+import { useState } from 'react';
 
 const formSchema = z.object({
   id: z.string(),
@@ -60,6 +61,7 @@ export default function EditTicketForm({
   priority,
   user_email,
 }: EditTicketFormProps) {
+  const [loading, setLoading] = useState(false);
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -72,7 +74,9 @@ export default function EditTicketForm({
   });
 
   const handleSubmit = async (values: z.infer<typeof formSchema>) => {
+    setLoading(true);
     await updateTicket(values);
+    setLoading(false);
   };
 
   return (
@@ -88,7 +92,7 @@ export default function EditTicketForm({
                   <Label>ID</Label>
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} disabled={loading} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -105,7 +109,7 @@ export default function EditTicketForm({
                   <Label>Title</Label>
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} disabled={loading} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -122,7 +126,7 @@ export default function EditTicketForm({
                   <Label>Body</Label>
                 </FormLabel>
                 <FormControl>
-                  <Textarea {...field} />
+                  <Textarea {...field} disabled={loading} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -138,7 +142,7 @@ export default function EditTicketForm({
                 <FormLabel>
                   <Label>Priority</Label>
                 </FormLabel>
-                <Select onValueChange={field.onChange}>
+                <Select onValueChange={field.onChange} disabled={loading}>
                   <FormControl>
                     <SelectTrigger>
                       <SelectValue placeholder="Select a priority" />
@@ -165,14 +169,16 @@ export default function EditTicketForm({
                   <Label>User Email</Label>
                 </FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} disabled={loading} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             );
           }}
         />
-        <Button type="submit">Update</Button>
+        <Button type="submit">
+          {loading ? 'Updating...' : 'Update Ticket'}
+        </Button>
       </form>
     </Form>
   );
