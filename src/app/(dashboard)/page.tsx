@@ -7,10 +7,24 @@ import Link from 'next/link';
 export default function Home() {
   return (
     <main>
-      <h2>Dashboard</h2>
-      <p>
-        The main dashboard of <span className="font-bold">Dojo Helpdesk</span>
-      </p>
+      <header className="flex items-center gap-2">
+        <h2>Dashboard</h2>
+        <p>
+          <small>Website updates</small>
+        </p>
+      </header>
+
+      <DashboardPost title="Profile Updates">
+        <p>
+          Ticketing has been updated to allow for filtering by ticket number,
+          title, priority, and creator.
+        </p>
+        <br />
+        <p>
+          The table has also been updated to include pagination, and the ability
+          to sort by column.
+        </p>
+      </DashboardPost>
 
       <DashboardPost title="Ticketing Updates">
         <p>

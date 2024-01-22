@@ -42,3 +42,6 @@ db.json
 
 .env
 .env.local
+
+# Contentlayer
+.contentlayer
